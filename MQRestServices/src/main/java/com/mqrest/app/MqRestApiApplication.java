@@ -7,9 +7,11 @@ import org.springframework.boot.web.servlet.support.SpringBootServletInitializer
 import org.springframework.context.annotation.ComponentScan;
 
 import javafx.application.Application;
+import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
-@ComponentScan("com.mqrest")
 @SpringBootApplication
+@EnableSwagger2
+@ComponentScan("com.mqrest.*")
 public class MqRestApiApplication extends SpringBootServletInitializer   {
 
 	public static void main(String[] args) {

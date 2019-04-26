@@ -9,11 +9,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -22,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.mft.rest.api.utility.MFTCommonUtility;
 import com.mft.rest.api.utility.MonitorCreationUtil;
-import com.mft.rest.api.utility.MonitorDeletionUtil;
+import com.mft.rest.api.utility.TransfersDeletionUtil;
 import com.mft.rest.beans.Transfer_Details;
 
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
@@ -36,7 +34,8 @@ public class MftAPIController {
 	@Autowired
 	MonitorCreationUtil monitorCreationUtil;
 	@Autowired
-	MonitorDeletionUtil monitorDeletionUtil;
+	TransfersDeletionUtil transfersDeletionUtil;
+	
 	@PostMapping(value = "/getTransferXML")
 	public ResponseEntity<String> getTransferXML(@RequestBody Transfer_Details transferDetails) throws ParserConfigurationException, IOException, TransformerException {
 		return new ResponseEntity<String>(monitorCreationUtil.getTransferXMLString(transferDetails), MFTCommonUtility.getHttpResponseHeader(), HttpStatus.OK);
@@ -44,6 +43,11 @@ public class MftAPIController {
 	
 	@DeleteMapping(value = "/deleteMonitor/{MonitorName}/{HostName}/{User}")
 	public ResponseEntity<String> deleteMonitor(@PathVariable("MonitorName") String monitorName ,@PathVariable("HostName") String hostName, @PathVariable("User") String user){
-		return new ResponseEntity<String>(monitorDeletionUtil.deleteMonitor(monitorName,hostName,user),  MFTCommonUtility.getHttpResponseHeader(), HttpStatus.OK);
+		return new ResponseEntity<String>(transfersDeletionUtil.deleteMonitor(monitorName,hostName,user),  MFTCommonUtility.getHttpResponseHeader(), HttpStatus.OK);
+	}
+	
+	@DeleteMapping(value = "/deleteScheduler/{ScheduleId}/{HostName}/{User}")
+	public ResponseEntity<String> deleteScheduler(@PathVariable("ScheduleId") String ScheduleID ,@PathVariable("HostName") String hostName, @PathVariable("User") String user){
+		return new ResponseEntity<String>(transfersDeletionUtil.deleteScheduler(ScheduleID,hostName,user),  MFTCommonUtility.getHttpResponseHeader(), HttpStatus.OK);
 	}
 }

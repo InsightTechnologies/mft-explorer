@@ -6,35 +6,24 @@ import java.util.List;
 import javax.jms.BytesMessage;
 import javax.jms.Connection;
 import javax.jms.JMSException;
-import javax.jms.Connection;
-import javax.jms.Destination;
-import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.jms.MessageConsumer;
 import javax.jms.Session;
-import javax.jms.TextMessage;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Configuration;
 
 import com.ibm.msg.client.jms.JmsConnectionFactory;
-import com.ibm.msg.client.jms.JmsFactoryFactory;
-import com.ibm.msg.client.wmq.WMQConstants;
 import com.mqrest.MQService.MQUtilities;
 
-import ch.qos.logback.core.net.SyslogOutputStream;
-
-import com.ibm.msg.client.jms.JmsConnectionFactory;
-
+@Configuration
 public class MQTopicUtility {
-	Connection connection = null;
-	Destination destination = null;
-	MessageConsumer consumer = null;
+	@Autowired
+	XmlToJsonConvertor conversion;
 
-	byte[] byteData = null;
-	List<String> messageBody = new ArrayList<String>();
-	XmlToJsonConvertor conversion = new XmlToJsonConvertor();
-
-	public List<String> topicConsumer(String topicName, String selector, String connString) throws JMSException
-
-	{
+	public List<String> topicConsumer(String topicName, String selector, String connString) throws JMSException{
+		byte[] byteData = null;
+		List<String> messageBody = new ArrayList<String>();
 		JmsConnectionFactory cf = MQUtilities.getConnectionFactory(connString);
 		Connection connection = cf.createConnection();
 		Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
@@ -46,11 +35,9 @@ public class MQTopicUtility {
 		connection.start();
 		Message message = null;
 		while (true) {
-			// System.out.println(consumer);
 			message = consumer.receiveNoWait();
 
 			if (message != null) {
-				// System.out.println(message);
 				BytesMessage byteMessage = (BytesMessage) message;
 
 				byteData = new byte[(int) byteMessage.getBodyLength()];

@@ -7,7 +7,7 @@
 #	To make MQ-MFT user interactions error free and easier, MFT-Explorer has been designed.
 #
 # Features		:
-# 
+# MFT-Explorer UIis a User interface which assists user to perform all MFT based operations and to monitor the environment configured.
 # MQRestServices is a microcservice which performs operations on IBM MQ as per DB configuration.
 # MFT-Database-Services - is a microcservice which performs data retrieval and update operations on IBM DB2.
 # MQMFT Rest API is composite service which performs rest operations and provides commute between microservices and UI as a Gateway.

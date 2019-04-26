@@ -27,6 +27,7 @@ com\miracle\mft\operation\utils\JobXmlRowMapper.class
 com\miracle\mft\controller\MqMftUserExitController.class
 com\miracle\mft\model\MqmftUserExit.class
 com\miracle\mft\main\MainApplication.class
+com\miracle\mft\operations\MqmftMonitors.class
 com\miracle\mft\model\JobXml.class
 com\miracle\mft\operations\TransferFileLogOperations.class
 com\miracle\mft\operation\utils\MqmftUserExitDetailRowMapper.class
@@ -37,6 +38,7 @@ com\miracle\mft\operation\utils\MqmftMonitorStatusRowMapper.class
 com\miracle\mft\swagger\config\SwaggerHomeController.class
 com\miracle\mft\operations\TransferOperation.class
 com\miracle\mft\operations\MqmftHostOperations.class
+com\miracle\mft\operations\MqmftMonitorRowMapper.class
 com\miracle\mft\operations\MqmftMonitorStatusOperations.class
 com\miracle\mft\model\MqmftMonitorStatus.class
 com\miracle\mft\operations\OriginalXMLRequestOperations.class

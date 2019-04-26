@@ -1,11 +1,11 @@
 package com.mqmft.swagger.config;
 
-import org.springframework.context.annotation.Configuration;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import springfox.documentation.annotations.ApiIgnore;
 
-@Configuration
+@Controller
 @ApiIgnore
 public class SwaggerHomeController {
 

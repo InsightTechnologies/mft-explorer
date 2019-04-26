@@ -1,75 +1,73 @@
 package com.mft.rest.beans;
 
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class Schedule_details {
-	  private String endtime;
-	  private String frequency;
-	  private String interval;
-	  private String starttime;
-	  private String timebase;
-	/**
-	 * @return the endtime
-	 */
-	public String getEndtime() {
-		return endtime;
-	}
-	/**
-	 * @param endtime the endtime to set
-	 */
-	public void setEndtime(String endtime) {
-		this.endtime = endtime;
-	}
-	/**
-	 * @return the frequency
-	 */
-	public String getFrequency() {
-		return frequency;
-	}
-	/**
-	 * @param frequency the frequency to set
-	 */
-	public void setFrequency(String frequency) {
-		this.frequency = frequency;
-	}
-	/**
-	 * @return the interval
-	 */
-	public String getInterval() {
-		return interval;
-	}
-	/**
-	 * @param interval the interval to set
-	 */
-	public void setInterval(String interval) {
-		this.interval = interval;
-	}
-	/**
-	 * @return the starttime
-	 */
-	public String getStarttime() {
-		return starttime;
-	}
-	/**
-	 * @param starttime the starttime to set
-	 */
-	public void setStarttime(String starttime) {
-		this.starttime = starttime;
-	}
+	private String Timebase;
+	private String Frequency;
+	private String Interval;
+	private String Starttime;
+	private String Endtime;
 	/**
 	 * @return the timebase
 	 */
 	public String getTimebase() {
-		return timebase;
+		return Timebase;
 	}
 	/**
 	 * @param timebase the timebase to set
 	 */
 	public void setTimebase(String timebase) {
-		this.timebase = timebase;
+		Timebase = timebase;
 	}
-	
+	/**
+	 * @return the frequency
+	 */
+	public String getFrequency() {
+		return Frequency;
+	}
+	/**
+	 * @param frequency the frequency to set
+	 */
+	public void setFrequency(String frequency) {
+		Frequency = frequency;
+	}
+	/**
+	 * @return the interval
+	 */
+	public String getInterval() {
+		return Interval;
+	}
+	/**
+	 * @param interval the interval to set
+	 */
+	public void setInterval(String interval) {
+		Interval = interval;
+	}
+	/**
+	 * @return the starttime
+	 */
+	public String getStarttime() {
+		return Starttime;
+	}
+	/**
+	 * @param starttime the starttime to set
+	 */
+	public void setStarttime(String starttime) {
+		Starttime = starttime;
+	}
+	/**
+	 * @return the endtime
+	 */
+	public String getEndtime() {
+		return Endtime;
+	}
+	/**
+	 * @param endtime the endtime to set
+	 */
+	public void setEndtime(String endtime) {
+		Endtime = endtime;
+	}
 	
 }

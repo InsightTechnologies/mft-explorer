@@ -22,7 +22,12 @@ public class MqmftMonitorStatusController {
 
 	@GetMapping("/getDeletedMonitorStatus")
 	public ResponseEntity<?> getMonitorStatus() {
-		return new ResponseEntity<>(monitorStatusOperations.getMoniterStatus(), HttpStatus.OK);
+		return new ResponseEntity<>(monitorStatusOperations.getMonitorStatus(), HttpStatus.OK);
+	}
+	
+	@GetMapping("/getMonitors")
+	public ResponseEntity<?> getMonitors() {
+		return new ResponseEntity<>(monitorStatusOperations.getMonitors(), HttpStatus.OK);
 	}
 
 	@PostMapping("/insertDeletedMonitorStatus")

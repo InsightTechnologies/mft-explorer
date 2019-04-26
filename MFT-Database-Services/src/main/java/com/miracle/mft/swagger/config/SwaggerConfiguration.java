@@ -33,7 +33,7 @@ public class SwaggerConfiguration {
     private ApiInfo apiEndPointsInfo() {
         return new ApiInfoBuilder().title("MFT Data Base Rest Api")
             .description("Database api to retrive data from db2")
-            .contact(new Contact("Purushotham Nadipalli", "www.miraclcedoft.com", "pnadipalli@miraclesoft.com"))
+            .contact(new Contact("MFTExplorerTeam", "www.miraclcesoft.com", ""))
             .build();
     }
 

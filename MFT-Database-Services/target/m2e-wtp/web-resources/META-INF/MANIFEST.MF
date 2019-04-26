@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Implementation-Title: MQDBAPI
+Implementation-Version: DBAPI
+Built-By: mthadi
+Implementation-Vendor-Id: com.miracle
+Build-Jdk: 1.8.0_201
+Implementation-URL: https://projects.spring.io/spring-boot/#/spring-bo
+ ot-starter-parent/MFT
+Created-By: Maven Integration for Eclipse
+

@@ -1,7 +1,6 @@
 package com.mqrest.MQService;
 
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Enumeration;
@@ -9,9 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.jms.BytesMessage;
 import javax.jms.Connection;
-import javax.jms.JMSConnectionFactory;
 import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.jms.Queue;
@@ -19,7 +16,7 @@ import javax.jms.QueueBrowser;
 import javax.jms.Session;
 import javax.xml.parsers.ParserConfigurationException;
 
-import org.springframework.stereotype.Controller;
+import org.springframework.context.annotation.Configuration;
 import org.w3c.dom.DOMException;
 import org.xml.sax.SAXException;
 
@@ -33,7 +30,7 @@ import com.ibm.msg.client.jms.JmsConnectionFactory;
 import com.ibm.msg.client.wmq.compat.base.internal.MQC;
 import com.mqrest.pcf.PCFQueueUtility;
 
-@Controller
+@Configuration
 public class MQServices {
 
 	public List listLocalQueues(String connString) throws MQException, IOException {
@@ -66,11 +63,10 @@ public class MQServices {
 
 	}
 
-	public String putHeaderMessage(Map header, String msg, String connString, String queueName)
+	public String putHeaderMessage(Map<Object, Object> header, String msg, String connString, String queueName)
 			throws DOMException, ParserConfigurationException, SAXException, IOException {
 		MQOperations.putHeaderMessge(header, msg, connString, queueName);
-		String suc = "Put Msg Successfully";
-		return suc;
+		return "Message Put Successfull";
 
 	}
 
@@ -80,7 +76,7 @@ public class MQServices {
 	{
 		JmsConnectionFactory cf = MQUtilities.getConnectionFactory(connString);
 		Connection connection = cf.createConnection();
-
+		byte[] byteData = null;
 		List<String> browsedMsgs = new ArrayList();
 		Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
 		Queue queue = session.createQueue(qName);
@@ -89,8 +85,10 @@ public class MQServices {
 		Enumeration e1 = browser.getEnumeration();
 		int queueDepth = Collections.list(e1).size();
 		Enumeration e = browser.getEnumeration();
+		System.out.println(queueDepth);
 		int count = 1;
 		for (int i = 0; i < queueDepth; i++)  {
+			System.out.println(rangeStart);
 			if (rangeStart > queueDepth)
 				break;
 			Message message2 = (Message) e.nextElement();
@@ -102,13 +100,19 @@ public class MQServices {
 				}
 				if (message2.toString().contains("jms_bytes")) {
 					browsedMsgs.add(message2.toString().replaceAll("JMS", "").replaceAll("_IBM_", ""));
+//					
+//					BytesMessage byteMessage = (BytesMessage) message2;
+//					byteData = new byte[(int) byteMessage.getBodyLength()];
+//					byteMessage.readBytes(byteData);
+//					browsedMsgs.add(message2.toString().substring(0, message2.toString().lastIndexOf("\n"))
+//							.replaceAll("JMS", "").replaceAll("_IBM_", "") + "\n" + new String(byteData));
 				}
 				if (count == rangeEnd) {
 					break;
 				}
 			}
 			count++;
-			// browsedMsgs.add(message2.toString().replaceAll("JMS","").replaceAll("_IBM_",""));
+			
 		}
 		System.out.println("messages retrieved");
 
@@ -118,7 +122,7 @@ public class MQServices {
 
 	}
 
-	public Map getQProperties(String connString, String queueName) throws PCFException, MQException, IOException {
+	public Map<String, Object> getQProperties(String connString, String queueName) throws PCFException, MQException, IOException {
 		Map<String, Object> qProperties = new HashMap<String, Object>();
 		qProperties = PCFQueueUtility.queueProps(connString, queueName, qProperties);
 		return qProperties;

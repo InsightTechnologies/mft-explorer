@@ -1,29 +1,30 @@
 package com.mqrest.topic;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.XML;
+import org.springframework.context.annotation.Configuration;
 
+@Configuration
 public class XmlToJsonConvertor {
-public int PRETTY_PRINT_INDENT_FACTOR = 4;
-private List<String> convetedJsonObj=new ArrayList<String>();
+	public int PRETTY_PRINT_INDENT_FACTOR = 4;
 
+	public List<String> xmlToJson(List<String> messageBody){
+		List<String> convetedJsonObj = new ArrayList<String>();
+		for (String stringBody : messageBody) {
 
-public List<String> xmlToJson(List<String> messageBody) 
-{
-for(String stringBody:messageBody) {
+			try {
+				JSONObject xmlJSONObj = XML.toJSONObject(stringBody);
 
-try {
-JSONObject xmlJSONObj = XML.toJSONObject(stringBody);
+				convetedJsonObj.add(xmlJSONObj.toString(PRETTY_PRINT_INDENT_FACTOR));
+			} catch (JSONException je) {
+				System.out.println(je.toString());
+			}
+		}
+		return convetedJsonObj;
 
-convetedJsonObj.add(xmlJSONObj.toString(PRETTY_PRINT_INDENT_FACTOR));
-} catch (JSONException je) {
-System.out.println(je.toString());
-}
-}
-return convetedJsonObj;
-
-}
+	}
 }

@@ -27,7 +27,7 @@ public class SwaggerConfiguration {
     private ApiInfo apiEndPointsInfo() {
         return new ApiInfoBuilder().title("MQMFT rest api")
             .description("MqMft api to transact messages with MQ")
-            .contact(new Contact("Mithun Roy Thadi", "www.miraclcesoft.com", "mthadi@miraclesoft.com"))
+            .contact(new Contact("MFTExplorerTeam", "www.miraclcesoft.com", ""))
             .build();
     }
 

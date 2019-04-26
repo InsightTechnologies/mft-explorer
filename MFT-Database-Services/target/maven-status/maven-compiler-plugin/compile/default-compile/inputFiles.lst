@@ -28,6 +28,8 @@ C:\Program Files (x86)\Java\apache-maven-3.6.0-bin\apache-maven-3.6.0\bin\MFT-Da
 C:\Program Files (x86)\Java\apache-maven-3.6.0-bin\apache-maven-3.6.0\bin\MFT-Database-Services\src\main\java\com\miracle\mft\model\MqmftMonitorStatus.java
 C:\Program Files (x86)\Java\apache-maven-3.6.0-bin\apache-maven-3.6.0\bin\MFT-Database-Services\src\main\java\com\miracle\mft\model\OriginalXMLRequest.java
 C:\Program Files (x86)\Java\apache-maven-3.6.0-bin\apache-maven-3.6.0\bin\MFT-Database-Services\src\main\java\com\miracle\mft\operations\JobXmlOperations.java
+C:\Program Files (x86)\Java\apache-maven-3.6.0-bin\apache-maven-3.6.0\bin\MFT-Database-Services\src\main\java\com\miracle\mft\operations\MqmftMonitorRowMapper.java
+C:\Program Files (x86)\Java\apache-maven-3.6.0-bin\apache-maven-3.6.0\bin\MFT-Database-Services\src\main\java\com\miracle\mft\operations\MqmftMonitors.java
 C:\Program Files (x86)\Java\apache-maven-3.6.0-bin\apache-maven-3.6.0\bin\MFT-Database-Services\src\main\java\com\miracle\mft\constants\MftQueryConstants.java
 C:\Program Files (x86)\Java\apache-maven-3.6.0-bin\apache-maven-3.6.0\bin\MFT-Database-Services\src\main\java\com\miracle\mft\controller\MqMftUserExitController.java
 C:\Program Files (x86)\Java\apache-maven-3.6.0-bin\apache-maven-3.6.0\bin\MFT-Database-Services\src\main\java\com\miracle\mft\model\JobXml.java

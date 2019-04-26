@@ -1,9 +1,12 @@
 package com.mqmft.rest.api.utility;
 
 import org.json.JSONObject;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpHeaders;
 
+@Configuration
 public class MQMFTCommonUtility {
+	
 	public static String getJsonResponse(Object result, String responseType) {
 		JSONObject jsonResponse = new JSONObject();
 		if (responseType.equalsIgnoreCase("Ok")) {

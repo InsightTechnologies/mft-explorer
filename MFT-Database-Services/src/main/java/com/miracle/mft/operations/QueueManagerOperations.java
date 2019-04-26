@@ -64,7 +64,7 @@ public class QueueManagerOperations {
 
 	public ResponseEntity<?> deleteQueueManager(int id) {
 		try {
-			query = String.format(MftQueryConstants.Delete_Host, id);
+			query = String.format(MftQueryConstants.Delete_QM, id);
 			jdbcTemplate.execute(query);
 		} catch (Exception e) {
 			return new ResponseEntity<>(new MftUserException("failed to delete the records", e),

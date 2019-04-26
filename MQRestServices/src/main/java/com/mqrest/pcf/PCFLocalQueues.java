@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.context.annotation.Configuration;
+
 import com.ibm.mq.MQEnvironment;
 import com.ibm.mq.MQException;
 import com.ibm.mq.MQPutMessageOptions;
@@ -18,6 +20,7 @@ import com.ibm.mq.pcf.PCFMessageAgent;
 import com.ibm.msg.client.wmq.compat.base.internal.MQC;
 import com.mqrest.MQService.LocalQueues;
 
+@Configuration
 public class PCFLocalQueues {
 
 	public static List<LocalQueues> getLocalQueues(String connString, String sysQueue) throws MQException, IOException {

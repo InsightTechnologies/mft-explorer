@@ -21,10 +21,13 @@ public class MqmftMonitorStatusOperations {
 	private JdbcTemplate jdbcTemplate;
 	@Autowired
 	private MqmftMonitorStatusRowMapper mqmftMonitorStatusRowMapper;
+	@Autowired
+	private MqmftMonitorRowMapper mqmftMonitorRowMapper;
 	private List<MqmftMonitorStatus> mqmftMonitorStatusList;
+	private List<MqmftMonitors> mqmftMonitors;
 	String query;
 
-	public ResponseEntity<?> getMoniterStatus() {
+	public ResponseEntity<?> getMonitorStatus() {
 		try {
 			query = String.format(MftQueryConstants.DeletedMonitorsList);
 			mqmftMonitorStatusList = jdbcTemplate.query(query, mqmftMonitorStatusRowMapper);
@@ -32,6 +35,16 @@ public class MqmftMonitorStatusOperations {
 			return new ResponseEntity<>(new MftUserException("failed to get the records", e), HttpStatus.BAD_REQUEST);
 		}
 		return new ResponseEntity<>(mqmftMonitorStatusList, HttpStatus.OK);
+	}
+	
+	public ResponseEntity<?> getMonitors() {
+		try {
+			query = String.format(MftQueryConstants.getMonitors);
+			mqmftMonitors = jdbcTemplate.query(query, mqmftMonitorRowMapper);
+		} catch (Exception e) {
+			return new ResponseEntity<>(new MftUserException("failed to get the records", e), HttpStatus.BAD_REQUEST);
+		}
+		return new ResponseEntity<>(mqmftMonitors, HttpStatus.OK);
 	}
 
 	public ResponseEntity<?> insertMoniterStatus(MqmftMonitorStatus monitorStatus) {
