@@ -63,7 +63,7 @@ public class MqMftUserExitController {
 		return new ResponseEntity<>(OriginalXMLRequestOperations.getOriginalXml(id), HttpStatus.OK);
 	}
 
-	@PostMapping("/gejobXml")
+	@PostMapping("/getjobXml")
 	public ResponseEntity<?> getJobXml(@RequestParam(value = "JobXMl") String jobXml) {
 		return new ResponseEntity<>(jobXmlOperations.getOriginalXml(jobXml), HttpStatus.OK);
 	}

@@ -11,9 +11,10 @@ import org.springframework.http.HttpEntity;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
+
 /**
  * 
- *
+ * 
  *
  */
 @Configuration
@@ -218,19 +219,24 @@ public class DBServiceConnector {
 	 * @throws URISyntaxException 
 	 * @throws RestClientException 
 	 */
-	public JSONObject insertDeletedMonitorStatus(MonitorStatus object) throws IOException, RestClientException, URISyntaxException {
+	public JSONObject insertDeletedMonitorStatus(MqmftMonitorStatus object) throws IOException, RestClientException, URISyntaxException {
 		RestTemplate restTemplate = new RestTemplate();
-		String uri = buildAPIUri() + DBConstants.service + DBConstants.insertDeletedMonitorStatus;
-		System.out.println(uri);
-		URI u = new URI(uri);
+		String url = buildAPIUri() + DBConstants.service + DBConstants.insertDeletedMonitorStatus;
+		System.out.println(url);
+		URI u = new URI(url);
 		HttpEntity<Object> httpEntity = new HttpEntity<Object>(object);
 		System.out.println(httpEntity);
 		 JSONObject result = restTemplate.postForObject(u,httpEntity,JSONObject.class);
 		return result;
 	}
 	
+	/**
+	 * This Method is used to build the base api uri
+	 * @return
+	 */
 	public String buildAPIUri() {
 		return (http + dbHost + ":" + dbPort + "/"
 				+ dbAPI + "/");
 	}
+	
 }

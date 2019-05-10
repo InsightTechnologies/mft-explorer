@@ -1,14 +1,13 @@
 package com.mqrest.MQService;
 
-import java.util.Hashtable; 
-
-import com.ibm.mq.*; 
+import com.ibm.mq.MQC;
+import com.ibm.mq.MQEnvironment;
+import com.ibm.mq.MQMessage;
+import com.ibm.mq.MQPutMessageOptions;
+import com.ibm.mq.MQQueue;
+import com.ibm.mq.MQQueueManager;
 import com.ibm.mq.constants.CMQC;
-import com.ibm.mq.constants.CMQCFC;
 import com.ibm.mq.headers.MQRFH2;
-import com.ibm.mq.headers.pcf.PCFException;
-import com.ibm.mq.pcf.PCFMessage;
-import com.ibm.mq.pcf.PCFMessageAgent;
 
 public class InquireQ  
 { 

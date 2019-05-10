@@ -12,7 +12,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,7 +19,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.w3c.dom.DOMException;
 import org.xml.sax.SAXException;
@@ -53,7 +51,7 @@ public class RestApiController {
 	@GetMapping(value = "/queue/allLocal")
 	public ResponseEntity<List<LocalQueues>> listLocalQueues(@PathVariable("connectionString") String connString)
 			throws MQException, IOException {
-		List localQueues = mqService.listLocalQueues(connString);
+		List<LocalQueues> localQueues = mqService.listLocalQueues(connString);
 		if (localQueues.isEmpty()) {
 			return new ResponseEntity(HttpStatus.NO_CONTENT);
 			// You many decide to return HttpStatus.NOT_FOUND
@@ -83,11 +81,18 @@ public class RestApiController {
 		String messages = mqService.putHeaderMessage(header, msg, connString, queueName);
 		return new ResponseEntity<String>(messages, HttpStatus.OK);
 	}
-
+	
+	@PutMapping(value = "/queue/putMsg/{queueName}/{queueManager}")
+	public ResponseEntity<?> putMessage(@RequestBody String msg, @PathVariable("connectionString") String connString,
+			@PathVariable("queueName") String queueName, @PathVariable("queueManager") String queueManager) throws MQException, IOException {
+		String messages = mqService.putHeaderLessMessage(msg, connString, queueName, queueManager);
+		return new ResponseEntity<String>(messages, HttpStatus.OK);
+	}
+	
 	@GetMapping(value = "/queue/properties/{queueName}")
 	public ResponseEntity<Map<String, Object>> getQProperties(@PathVariable("connectionString") String connString,
 			@PathVariable("queueName") String queueName) throws PCFException, MQException, IOException {
-		Map properties = mqService.getQProperties(connString, queueName);
+		Map<String, Object> properties = mqService.getQProperties(connString, queueName);
 		return new ResponseEntity<Map<String, Object>>(properties, HttpStatus.OK);
 	}
 
@@ -97,7 +102,6 @@ public class RestApiController {
 		List localQueues = pcfLocalQueues.getLocalQueues(connString, "normal");
 		HttpHeaders responseHeaders = new HttpHeaders();
 		responseHeaders.set("Access-Control-Allow-Origin", "*");
-
 		if (localQueues.isEmpty()) {
 			return new ResponseEntity(HttpStatus.NO_CONTENT);
 			// You many decide to return HttpStatus.NOT_FOUND

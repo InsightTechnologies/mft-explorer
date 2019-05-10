@@ -84,7 +84,7 @@ public class MqApiController {
 		String jsonResponse;
 		String response ;
 		try {
-			response = mqQueues.putMessage(msg, connString, queueName);
+			response = mqQueues.put(msg, connString, queueName);
 			jsonResponse = mqMFTCommonUtility.getJsonResponse(response, "OK");
 		} catch (IOException ioExcep) {
 			jsonResponse = mqMFTCommonUtility.getJsonResponse(null, ioExcep.getMessage().toString().trim());

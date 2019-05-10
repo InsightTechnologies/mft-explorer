@@ -240,20 +240,4 @@ public class DBAPIController {
 
 		return new ResponseEntity<String>(jsonResponse, MQMFTCommonUtility.getHttpResponseHeader(), HttpStatus.OK);
 	}
-	
-	@PostMapping(value = "/monitorStatus", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<String> insertDeletedMonitorStatus(@RequestBody MonitorStatus monitorStatus) throws RestClientException, URISyntaxException {
-		JSONObject response = null;
-		String jsonResponse;
-		try {
-			System.out.println(monitorStatus);
-			response = dBServiceConnector.insertDeletedMonitorStatus(monitorStatus);
-			jsonResponse = mqMFTCommonUtility.getJsonResponse(response, "OK");
-		} catch (IOException ioExcep) {
-			jsonResponse = mqMFTCommonUtility.getJsonResponse(null, ioExcep.getMessage().toString().trim());
-			logger.error("IOException:" + ioExcep.getMessage().toString().trim());
-		}
-
-		return new ResponseEntity<String>(jsonResponse, MQMFTCommonUtility.getHttpResponseHeader(), HttpStatus.OK);
-	}
 }

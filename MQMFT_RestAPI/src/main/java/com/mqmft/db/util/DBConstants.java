@@ -14,6 +14,7 @@ public class DBConstants {
 	public static String insertHosts = "insertHosts";
 	public static String updateHosts = "updateHosts";
 	public static String delHosts = "deleteHosts";
+	public static String delMonitors = "deleteMonitors";
 	
 	public static String getAllJOBNames = "getAllJobNames";
 	public static String getTransferLogs = "getTransferLogs";

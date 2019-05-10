@@ -69,6 +69,11 @@ public class MQServices {
 		return "Message Put Successfull";
 
 	}
+	
+	public String putHeaderLessMessage(String message,String connString, String queueName, String qManager) throws MQException, IOException {
+		MQOperations.putHeaderLessMessge(message, connString, queueName, qManager);
+		return "Message sent to "+queueName+" successfully";
+	}
 
 	public List<String> browseMessages(String qName, String connString, int rangeStart, int rangeEnd)
 			throws JMSException

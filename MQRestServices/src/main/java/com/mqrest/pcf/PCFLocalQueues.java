@@ -1,7 +1,6 @@
 package com.mqrest.pcf;
 
 import java.io.IOException;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,7 +13,6 @@ import com.ibm.mq.MQQueue;
 import com.ibm.mq.MQQueueManager;
 import com.ibm.mq.constants.CMQC;
 import com.ibm.mq.constants.CMQCFC;
-import com.ibm.mq.headers.pcf.PCFException;
 import com.ibm.mq.pcf.PCFMessage;
 import com.ibm.mq.pcf.PCFMessageAgent;
 import com.ibm.msg.client.wmq.compat.base.internal.MQC;

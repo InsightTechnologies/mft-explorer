@@ -35,15 +35,52 @@ public class MonitorCreationUtil {
 	 * @throws IOException
 	 * @throws TransformerException
 	 */
+	public String getTransferXML(Transfer_Details transfer_Details) throws ParserConfigurationException, IOException, TransformerException {
+		if (transfer_Details.getMonitor_Name()!=null) {
+			return getMonitorXMLString(transfer_Details);
+		}
+		return getTransferXMLString(transfer_Details);
+	}
+	
+	/**
+	 * 
+	 * @param transfer_Details
+	 * @return
+	 * @throws ParserConfigurationException
+	 * @throws IOException
+	 * @throws TransformerException
+	 */
 	public String getTransferXMLString(Transfer_Details transfer_Details) throws ParserConfigurationException, IOException, TransformerException {
 		Document transferDocument = getXmlDocument();
-		Element monitorHeader = mfTbuildUtility.buildMFTMonitorHeader("monitor", "4.00", "http://www.ibm.com/xmlns/wmqfte/7.0.1/MonitorDefinition ./Monitor.xsd", "overwrite", transferDocument);
+		Element managedTag = transferDocument.createElement("managedTransfer");
+		Element requestTag = mfTbuildUtility.buildMFTRequestHeader("request", "4.00", "FileTransfer.xsd", transferDocument);
+		requestTag.appendChild(buildManagedTransfer(transferDocument, transfer_Details, managedTag));
+		transferDocument.appendChild(requestTag);
+		return formatXMLString(printDocument(transferDocument)).replace("xsi:xsi", "xsi").replace("standalone=\"no\"", "");
+		
+	}
+	/**
+	 * 
+	 * @param transfer_Details
+	 * @return
+	 * @throws ParserConfigurationException
+	 * @throws IOException
+	 * @throws TransformerException
+	 */
+	public String getMonitorXMLString(Transfer_Details transfer_Details) throws ParserConfigurationException, IOException, TransformerException {
+		Document transferDocument = getXmlDocument();
+		String overWrite = "true";
+		if (transfer_Details.getTrgt_Exists()=="error") {
+			overWrite ="false";
+		}
+		Element monitorHeader = mfTbuildUtility.buildMFTMonitorHeader("monitor", "4.00", "http://www.ibm.com/xmlns/wmqfte/7.0.1/MonitorDefinition ./Monitor.xsd", overWrite, transferDocument);
+		if (transfer_Details.getMonitor_Name()!=null)
 		mfTbuildUtility.buildMonitorName(monitorHeader, transfer_Details.getMonitor_Name(), transferDocument);
+		if (transfer_Details.getPoll_Frequency()!=null)
 		mfTbuildUtility.buildPollInterval(transferDocument, transfer_Details.getPoll_Frequency(), 1, monitorHeader);
 		addAgent(transferDocument, monitorHeader, transfer_Details.getSrc_Agent(), "agent");
 		addResources(transferDocument, monitorHeader, transfer_Details);
 		addTriggerMatch(transferDocument, monitorHeader, transfer_Details);
-//		mfTbuildUtility.buildMFTRequestHeader("4.00", "FileTransfer.xsd", transferDocument);
 		addTasks(transferDocument, monitorHeader, transfer_Details);
 		Element OriginatorElement = transferDocument.createElement("originator");
 		mfTbuildUtility.buildOriginator(transferDocument,OriginatorElement, transfer_Details.getSrc_HostName(), transfer_Details.getSrc_UserID());
@@ -51,6 +88,23 @@ public class MonitorCreationUtil {
 		return formatXMLString(printDocument(transferDocument)).replace("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>", "").replace("xsi:xsi", "xsi");
 		
 	}
+	
+//	/**
+//	 * 
+//	 * @param transfer_Details
+//	 * @return
+//	 * @throws ParserConfigurationException
+//	 * @throws IOException
+//	 * @throws TransformerException
+//	 */
+//	public String getSchedularXMLString(Transfer_Details transfer_Details) throws ParserConfigurationException, IOException, TransformerException {
+//		Document transferDocument = getXmlDocument();
+//		Element managedTag = transferDocument.createElement("managedTransfer");
+//		Element requestTag = mfTbuildUtility.buildMFTRequestHeader("request", "4.00", "FileTransfer.xsd", transferDocument);
+//		requestTag.appendChild(buildManagedTransfer(transferDocument, transfer_Details, managedTag));
+//		return formatXMLString(printDocument(transferDocument)).replace("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>", "").replace("xsi:xsi", "xsi");
+//		
+//	}
 	
 	/**
 	 * Method to format the created xml as per the Monitor xsd format
@@ -110,7 +164,7 @@ public class MonitorCreationUtil {
 	}
 	
 	/**
-	 * Utillity Method for the creation of the resources element
+	 * Utility Method for the creation of the resources element
 	 * @param document
 	 * @param rootTag
 	 * @param transferData
@@ -228,8 +282,9 @@ public class MonitorCreationUtil {
 		Element OriginatorElement = document.createElement("originator");
 		managedTag.appendChild(OriginatorElement);
 		mfTbuildUtility.buildOriginator(document,OriginatorElement, transferData.getSrc_HostName(), transferData.getSrc_UserID());
-		if (transferData.getSchedule() != null) {
-			mfTbuildUtility.buildSchedule(document, managedTag, transferData.getSchedule());
+		if (transferData.getSchedule().getStarttime() != null) {
+			if (transferData.getSchedule().getInterval()!= null && transferData.getSchedule().getFrequency() != null)
+				mfTbuildUtility.buildSchedule(document, managedTag, transferData.getSchedule());
 		}
 		addAgentDetails(document, managedTag, transferData.getSrc_Agent(), transferData.getSrc_QueMgr(), "sourceAgent");
 		addAgentDetails(document, managedTag, transferData.getTrgt_Agent(), transferData.getTrgt_QueMgr(),
@@ -303,16 +358,16 @@ public class MonitorCreationUtil {
 		}
 
 		sourceTag.setAttribute("recursive", "false");
-		if (transferData.getResource_Type().toLowerCase().equals("queue")) {
+		if (transferData.getResource_Type().toLowerCase()=="queue") {
 			sourceTag.setAttribute("type", "queue");
 		}
 
 		itemTag.appendChild(sourceTag);
 
-		if (transferData.getResource_Type().toLowerCase().equals("queue")) {
+		if (transferData.getResource_Type().toLowerCase()=="queue") {
 			Element queueTag = document.createElement("queue");
 			queueTag.setAttribute("useGroups", "false");
-			if (transferData.getAction().trim().equals("transfer")) {
+			if (transferData.getAction().trim()=="transfer") {
 				queueTag.appendChild(
 						document.createTextNode(transferData.getResource_Info() + "@" + transferData.getTrgt_QueMgr()));
 
@@ -330,7 +385,7 @@ public class MonitorCreationUtil {
 		}
 		Element destinagtionTag = document.createElement("destination");
 
-		if (transferData.getDestination_Type().toLowerCase().equals("queue")) {
+		if (transferData.getDestination_Type().toLowerCase()=="queue") {
 			destinagtionTag.setAttribute("type", transferData.getDestination_Type().toLowerCase());
 			Element queueTag = document.createElement("queue");
 			queueTag.setAttribute("persistent", "true");

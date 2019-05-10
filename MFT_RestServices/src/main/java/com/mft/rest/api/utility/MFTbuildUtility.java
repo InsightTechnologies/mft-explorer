@@ -132,7 +132,7 @@ public class MFTbuildUtility {
 		FrequencyTag.appendChild(document.createTextNode(schedule.getInterval()));
 		repeatTag.appendChild(FrequencyTag);
 
-		if (schedule.getEndtime() != null || !schedule.getEndtime().isEmpty()) {
+		if (schedule.getEndtime() != null) {
 			Element ExpireTimeTag = document.createElement("expireTime");
 			ExpireTimeTag.appendChild(document.createTextNode(schedule.getEndtime()));
 			repeatTag.appendChild(ExpireTimeTag);

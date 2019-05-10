@@ -36,11 +36,13 @@ public class MFTRequests {
 
 	public String deleteScheduler(String scheduleId, String host, String user) throws RestClientException, URISyntaxException {
 		RestTemplate restTemplate = new RestTemplate();
-		return restTemplate.getForObject(new URI( buildAPIUri() + MFTConstants.deleteScheduler+""+scheduleId+"/"+host+"/"+user),String.class);
+		 
+		 return restTemplate.getForObject(buildAPIUri() + MFTConstants.deleteScheduler+"/"+scheduleId+"/"+host+"/"+user,String.class);
 	}
 	
 	public String deleteMonitor(String monitor, String host, String user) throws RestClientException, URISyntaxException {
 		RestTemplate restTemplate = new RestTemplate();
-		return restTemplate.getForObject(new URI( buildAPIUri() + MFTConstants.deleteMonitor+""+monitor+"/"+host+"/"+user),String.class);
+		
+		return restTemplate.getForObject( buildAPIUri() + MFTConstants.deleteMonitor+"/"+monitor+"/"+host+"/"+user,String.class);
 	}
 }

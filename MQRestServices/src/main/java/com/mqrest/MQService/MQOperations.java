@@ -20,6 +20,7 @@ import java.awt.Point;
 import java.io.IOException;
 import java.io.StringReader;
 import java.util.Arrays;
+import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 
@@ -43,6 +44,14 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
+import com.ibm.mq.MQAsyncStatus;
+import com.ibm.mq.MQC;
+import com.ibm.mq.MQException;
+import com.ibm.mq.MQMessage;
+import com.ibm.mq.MQPutMessageOptions;
+import com.ibm.mq.MQQueue;
+import com.ibm.mq.MQQueueManager;
+import com.ibm.mq.constants.CMQC;
 import com.ibm.mq.constants.MQConstants;
 import com.ibm.msg.client.jms.JmsConnectionFactory;
 import com.ibm.msg.client.jms.JmsFactoryFactory;
@@ -98,7 +107,7 @@ public class MQOperations {
 			destination = context.createQueue("queue:///" + queueName);
 			cf.setStringProperty(WMQConstants.WMQ_APPLICATIONNAME, APP_USER);
 			TextMessage messageData = context.createTextMessage(message);
-
+			
 			producer = context.createProducer();
 			producer.send(destination, messageData);
 
@@ -230,5 +239,48 @@ public class MQOperations {
 		}
 		return;
 	}
+	
+	/**
+	 * 
+	 * @param message
+	 * @param connString
+	 * @param queueName
+	 * @return 
+	 * @throws MQException 
+	 * @throws IOException 
+	 */
+	public static String putHeaderLessMessge(String message, String connString, String queueName, String qManager) throws MQException, IOException {
+		String [] connDetails = connString.split(":");
+		 String HOST = connDetails[0];
+		 String CHANNEL = connDetails[1];
+		 int PORT =	 Integer.parseInt(connDetails[2]);
+		Hashtable<String, Object> props = new Hashtable<String, Object>();
+        props.put(MQConstants.CHANNEL_PROPERTY, CHANNEL);
+        props.put(MQConstants.PORT_PROPERTY, PORT);
+        props.put(MQConstants.HOST_NAME_PROPERTY, HOST);
+        
+        MQQueueManager qMgr = null;
+        
+            qMgr = new MQQueueManager(qManager, props);
+//            int openOptions = MQConstants.MQOO_OUTPUT | MQConstants.MQOO_INPUT_AS_Q_DEF| MQConstants.MQOO_BIND_NOT_FIXED;
+            int openOptions = MQConstants.MQOO_OUTPUT | MQConstants.MQOO_BIND_NOT_FIXED;
+//            int openOptions = MQC.MQOO_INQUIRE + MQC.MQOO_FAIL_IF_QUIESCING + MQC.MQOO_INPUT_SHARED+CMQC.MQOO_OUTPUT + CMQC.MQOO_FAIL_IF_QUIESCING; 
+            MQQueue queue = qMgr.accessQueue(queueName, openOptions,null,null,null);
+            MQPutMessageOptions pmo = new MQPutMessageOptions(); // default
+            pmo.options = MQConstants.MQPMO_ASYNC_RESPONSE;
+            // create message
+            MQMessage mqMessage = new MQMessage();
+            mqMessage.format = MQConstants.MQFMT_STRING;
+            mqMessage.writeString(message);
+            queue.put(mqMessage, pmo);
+            queue.close();
+            System.out.println(mqMessage);
+            MQAsyncStatus asyncStatus = qMgr.getAsyncStatus();
+             if (asyncStatus.putSuccessCount==1)
+            	 return "put message to queue: "+queueName+" successfull";
+			return "put message Failed";
+        
+        }
+	
 
 }

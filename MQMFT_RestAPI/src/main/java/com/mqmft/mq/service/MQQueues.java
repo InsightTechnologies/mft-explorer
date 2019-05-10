@@ -32,9 +32,15 @@ public class MQQueues {
 		return result;
 	}
 
-	public String putMessage(String msg, String connString, String queueName) throws IOException {
+	public String putMessage(String msg, String connString, String queueName, String queueManager) throws IOException {
 		RestTemplate restTemplate = new RestTemplate();
 //		List<String> result = restTemplate.getForObject(apiUri+connString+MQQueueConstants.queuePut+queueName, List.class);
+		restTemplate.put(buildAPIUri()+connString+MQQueueConstants.queuePut+queueName+"/"+queueManager, msg);
+		return "Message Put successfully";
+		}
+	
+	public String put(String msg, String connString, String queueName) throws IOException {
+		RestTemplate restTemplate = new RestTemplate();
 		restTemplate.put(buildAPIUri()+connString+MQQueueConstants.queuePut+queueName, msg);
 		return "Message Put successfully";
 		

@@ -36,7 +36,7 @@ public class MqmftMonitorStatusOperations {
 		}
 		return new ResponseEntity<>(mqmftMonitorStatusList, HttpStatus.OK);
 	}
-	
+
 	public ResponseEntity<?> getMonitors() {
 		try {
 			query = String.format(MftQueryConstants.getMonitors);
@@ -57,6 +57,17 @@ public class MqmftMonitorStatusOperations {
 					HttpStatus.BAD_REQUEST);
 		}
 		return new ResponseEntity<>("Records inserted successfully", HttpStatus.OK);
+	}
+
+	public ResponseEntity<?> delete(int id, String monitor) {
+		try {
+			query = String.format(MftQueryConstants.DeleteMonitor, monitor, id);
+			jdbcTemplate.execute(query);
+		} catch (Exception e) {
+			return new ResponseEntity<>(new MftUserException("failed to delete the records", e),
+					HttpStatus.BAD_REQUEST);
+		}
+		return new ResponseEntity<>("Records deleted successfully ", HttpStatus.OK);
 	}
 
 }
