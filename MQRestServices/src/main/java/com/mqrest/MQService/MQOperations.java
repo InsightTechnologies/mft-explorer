@@ -141,7 +141,7 @@ public class MQOperations {
 		String QUEUE_NAME = queueName;
 		try {
 			// Create JMS objects
-			List keyArray = Arrays.asList("host","connection","content-length","user-agent","cache-control","origin","postman-token","content-type","accept","accept-encoding","accept-language","expect");
+			List keyArray = Arrays.asList("host","connection","content-length","user-agent","cache-control","origin","postman-token","content-type","accept","accept-encoding","accept-language","expect","accept-charset");
 			JmsConnectionFactory cf = MQUtilities.getConnectionFactory(connString);
 			Connection connection = cf.createConnection();
 			context = cf.createContext();

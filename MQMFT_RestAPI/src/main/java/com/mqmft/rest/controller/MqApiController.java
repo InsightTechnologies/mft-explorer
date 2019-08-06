@@ -79,7 +79,7 @@ public class MqApiController {
 	}
 
 	@PutMapping(value = "/queues/put/{queueName}/{connectionString}", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<String> putMessage(@RequestBody String msg, @PathVariable("connectionString") String connString,
+	public ResponseEntity<String> putMsg(@RequestBody String msg, @PathVariable("connectionString") String connString,
 			@PathVariable("queueName") String queueName) throws IOException {
 		String jsonResponse;
 		String response ;

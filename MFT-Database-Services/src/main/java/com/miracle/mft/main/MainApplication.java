@@ -19,10 +19,10 @@ public class MainApplication extends SpringBootServletInitializer {
 /*
  * Run following commands in maven goal
  * run ->run configuration->place below commands in goal
- * install:install-file  -Dfile=C:\Users\pnadipalli\Desktop\db2jcc4.jar -DgroupId=com.miracle.mft -DartifactId=db2jcc4 -Dversion=3.2.0 -Dpackaging=jar -DlocalRepositoryPath=C:\Users\pnadipalli\.m2\repository
- * install:install-file  -Dfile=C:\Users\pnadipalli\Desktop\db2jcc_license_cu.jar -DgroupId=com.miracle.mft -DartifactId=db2jcc4_license -Dversion=3.2.0 -Dpackaging=jar -DlocalRepositoryPath=C:\Users\pnadipalli\.m2\repository
- * install:install-file  -Dfile=C:\Users\pnadipalli\Desktop\db2jcc.jar -DgroupId=com.miracle.mft -DartifactId=db2jcc -Dversion=3.2.0 -Dpackaging=jar -DlocalRepositoryPath=C:\Users\pnadipalli\.m2\repository
-
+ * mvn install:install-file  -Dfile="C:\Users\mthadi\Documents\GITHUB\mft-explorer\MFT-Database-Services\lib\db2jcc4.jar" -DgroupId=com.miracle.mft *-DartifactId=db2jcc4 -Dversion=3.2.0 -Dpackaging=jar -DlocalRepositoryPath="C:\Users\mthadi\.m2\repository"
+ * mvn install:install-file  -Dfile="C:\Users\mthadi\Documents\GITHUB\mft-explorer\MFT-Database-Services\lib\db2jcc_license_cu.jar"  *-DgroupId=com.miracle.mft -DartifactId=db2jcc4_license -Dversion=3.2.0 -Dpackaging=jar -DlocalRepositoryPath="C:\Users\mthadi\.m2\repository"
+ *mvn install:install-file  -Dfile="C:\Users\mthadi\Documents\GITHUB\mft-explorer\MFT-Database-Services\lib\db2jcc.jar" -DgroupId=com.miracle.mft *-DartifactId=db2jcc -Dversion=3.2.0 -Dpackaging=jar -DlocalRepositoryPath="C:\Users\mthadi\.m2\repository"
+ * 
  */
 	public static void main(String[] args) {
 		System.setProperty("spring.global.filepath", "C:\\MFTDB\\globalProperties.properties");

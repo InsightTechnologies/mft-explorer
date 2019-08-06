@@ -10,9 +10,9 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class XmlToJsonConvertor {
-	public int PRETTY_PRINT_INDENT_FACTOR = 4;
+	public static int PRETTY_PRINT_INDENT_FACTOR = 4;
 
-	public List<String> xmlToJson(List<String> messageBody){
+	public static List<String> xmlToJson(List<String> messageBody){
 		List<String> convetedJsonObj = new ArrayList<String>();
 		for (String stringBody : messageBody) {
 

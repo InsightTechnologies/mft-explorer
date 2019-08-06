@@ -35,7 +35,7 @@ public class MQQueues {
 	public String putMessage(String msg, String connString, String queueName, String queueManager) throws IOException {
 		RestTemplate restTemplate = new RestTemplate();
 //		List<String> result = restTemplate.getForObject(apiUri+connString+MQQueueConstants.queuePut+queueName, List.class);
-		restTemplate.put(buildAPIUri()+connString+MQQueueConstants.queuePut+queueName+"/"+queueManager, msg);
+		restTemplate.put(buildAPIUri()+connString+MQQueueConstants.queuePutMsg+queueName+"/"+queueManager, msg);
 		return "Message Put successfully";
 		}
 	

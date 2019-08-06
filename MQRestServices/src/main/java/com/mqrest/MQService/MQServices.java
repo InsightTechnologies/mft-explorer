@@ -91,6 +91,7 @@ public class MQServices {
 		int queueDepth = Collections.list(e1).size();
 		Enumeration e = browser.getEnumeration();
 		System.out.println(queueDepth);
+		browsedMsgs.add(String.valueOf(queueDepth));
 		int count = 1;
 		for (int i = 0; i < queueDepth; i++)  {
 			System.out.println(rangeStart);
